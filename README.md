@@ -41,4 +41,51 @@ Changes to be committed:
  create mode 160000 git-submodule-one
 ```
 
-<image src="./images/git-submodule.png" width="50%" height="50%"/>
+<image src="./images/git-submodule.png"/>
+
+## clone 一个带子模块的项目
+
+1. clone 主仓库
+
+```shell
+➜  ~ git clone https://github.com/hbxeagle/git-submodule-main.git
+Cloning into 'git-submodule-main'...
+remote: Enumerating objects: 11, done.
+remote: Counting objects: 100% (11/11), done.
+remote: Compressing objects: 100% (8/8), done.
+remote: Total 11 (delta 0), reused 11 (delta 0), pack-reused 0
+Unpacking objects: 100% (11/11), done.
+➜  ~ cd git-submodule-main
+➜  git-submodule-main git:(master) ll
+total 8
+-rw-r--r--  1 didi  staff   1.4K Oct 16 15:21 README.md
+drwxr-xr-x  2 didi  staff    64B Oct 16 15:21 git-submodule-one
+drwxr-xr-x  3 didi  staff    96B Oct 16 15:21 images
+➜  git-submodule-main git:(master) ll git-submodule-one
+```
+2. 执行 `git submodule init` 初始化本地配置文件。
+
+```shell
+➜  git-submodule-main git:(master) git submodule init
+Submodule 'git-submodule-one' (https://github.com/hbxeagle/git-submodule-one.git) registered for path 'git-submodule-one'
+```
+
+3. 执行 `git submodule update` 来从子项目拉取所有数据，并检出你上层项目里所列的合适的提交。
+
+```shell
+➜  git-submodule-main git:(master) git submodule update
+Cloning into '/Users/didi/Workspace/WorkspaceGithub/OwnBack/git-submodule-main/git-submodule-one'...
+Submodule path 'git-submodule-one': checked out 'd1d9d7464948f4b5c64ceaf3a745f01f25fa8579'
+➜  git-submodule-main git:(master) ll git-submodule-one
+total 8
+-rw-r--r--  1 didi  staff    20B Oct 16 15:22 README.md
+```
+<image src="./images/git-submodule-clone.png"/>
+
+## 开发
+
+## 更新代码
+
+## merge 子模块冲突
+
+## 移除子模块
