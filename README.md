@@ -83,9 +83,131 @@ total 8
 <image src="./images/git-submodule-clone.png"/>
 
 ## 开发
+### 修改主项目代码
+按正常流程，add、commit、push
+
+### 修改子项目代码
+1. 在子项目目录，按正常流程，add、commit、push
+```shell
+➜  git-submodule-one git:(master) ✗ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+➜  git-submodule-one git:(master) ✗ git commit -am "修改 Readme，测试子模块提交修改"
+[master 66cd3cc] 修改 Readme，测试子模块提交修改
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+➜  git-submodule-one git:(master) git push -u origin master
+Counting objects: 3, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 355 bytes | 355.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To https://github.com/hbxeagle/git-submodule-one.git
+   a6a2e51..66cd3cc  master -> master
+Branch 'master' set up to track remote branch 'master' from 'origin'.
+```
+2. 切换到主项目目录，提交子项目的commit
+```shell
+➜  git-submodule-one git:(master) cd ..
+➜  git-submodule-main git:(master) ✗ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   git-submodule-one (new commits)
+
+no changes added to commit (use "git add" and/or "git commit -a")
+➜  git-submodule-main git:(master) ✗ git add .
+➜  git-submodule-main git:(master) ✗ git commit -m "提交子模块修改"
+[master 07c7f3b] 提交子模块修改
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+➜  git-submodule-main git:(master) git push -u origin master
+Counting objects: 2, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (2/2), 268 bytes | 268.00 KiB/s, done.
+Total 2 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/hbxeagle/git-submodule-main.git
+   083aae0..07c7f3b  master -> master
+Branch 'master' set up to track remote branch 'master' from 'origin'.
+```
+
+<image src="./images/git-submodule-modify.png"/>
 
 ## 更新代码
+1. 主项目 git pull
+```shell
+➜  git-submodule-main git:(master) git pull
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Compressing objects: 100% (1/1), done.
+remote: Total 2 (delta 1), reused 2 (delta 1), pack-reused 0
+Unpacking objects: 100% (2/2), done.
+From https://github.com/hbxeagle/git-submodule-main
+   083aae0..07c7f3b  master     -> origin/master
+Fetching submodule git-submodule-one
+From https://github.com/hbxeagle/git-submodule-one
+   a6a2e51..66cd3cc  master     -> origin/master
+Updating 083aae0..07c7f3b
+Fast-forward
+ git-submodule-one | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+2. 执行 git status 查看是否有新的 submodule commit
+```shell
+➜  git-submodule-main git:(master) git pull
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Compressing objects: 100% (1/1), done.
+remote: Total 2 (delta 1), reused 2 (delta 1), pack-reused 0
+Unpacking objects: 100% (2/2), done.
+From https://github.com/hbxeagle/git-submodule-main
+   083aae0..07c7f3b  master     -> origin/master
+Fetching submodule git-submodule-one
+From https://github.com/hbxeagle/git-submodule-one
+   a6a2e51..66cd3cc  master     -> origin/master
+Updating 083aae0..07c7f3b
+Fast-forward
+ git-submodule-one | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+➜  git-submodule-main git:(master) ✗ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   git-submodule-one (new commits)
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+3. 执行 git submodule update
+```shell
+➜  git-submodule-main git:(master) ✗ git submodule update
+Submodule path 'git-submodule-one': checked out '66cd3cc9898c0db167af1f275db2270c7ae6b51d'
+➜  git-submodule-main git:(master) git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+➜  git-submodule-main git:(master)
+```
+<image src="./images/git-submodule-pull.png"/>
 
 ## merge 子模块冲突
 
 ## 移除子模块
+
+
