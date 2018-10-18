@@ -209,5 +209,15 @@ nothing to commit, working tree clean
 ## merge 子模块冲突
 
 ## 移除子模块
+To remove a submodule you need to:
 
+Delete the relevant section from the .gitmodules file.
+Stage the .gitmodules changes git add .gitmodules
+Delete the relevant section from .git/config.
+Run git rm --cached path_to_submodule (no trailing slash).
+Run rm -rf .git/modules/path_to_submodule (no trailing slash).
+Commit git commit -m "Removed submodule "
+Delete the now untracked submodule files rm -rf path_to_submodule
+
+注意：只删除 .gitmodules 不能解除主项目和子项目之间的关系。
 
